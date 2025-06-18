@@ -574,7 +574,7 @@
         }
         
         // 폼 제출 처리
-        document.getElementById('attendForm').addEventListener('submit', async function(e) {
+        document.getElementById('attendForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             const formData = new FormData(e.target);
@@ -591,33 +591,51 @@
             const ENTRY_ATTENDANCE = 'entry.312957960'; // 참석 여부 필드
             const ENTRY_MESSAGE = 'entry.918453478';    // 메시지 필드
             
-            try {
-                // FormData 생성
-                const googleFormData = new FormData();
-                googleFormData.append(ENTRY_NAME, name);
-                googleFormData.append(ENTRY_ATTENDANCE, attendance);
-                googleFormData.append(ENTRY_MESSAGE, message || '');
-                
-                // Google Forms로 전송 (CORS 우회를 위해 no-cors 모드 사용)
-                await fetch(GOOGLE_FORM_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: googleFormData
-                });
-                
-                // 성공 메시지 표시
-                hideModal();
-                document.getElementById('successMessage').style.display = 'block';
-                
-                // 3초 후 성공 메시지 숨기기
-                setTimeout(() => {
-                    document.getElementById('successMessage').style.display = 'none';
-                }, 3000);
-                
-            } catch (error) {
-                console.error('Error:', error);
-                alert('전송 중 오류가 발생했습니다. 다시 시도해주세요.');
-            }
+            // 숨겨진 iframe 생성
+            const iframe = document.createElement('iframe');
+            iframe.name = 'hidden_iframe';
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+            
+            // 숨겨진 form 생성
+            const form = document.createElement('form');
+            form.action = GOOGLE_FORM_URL;
+            form.method = 'POST';
+            form.target = 'hidden_iframe';
+            
+            // 입력 필드들 추가
+            const nameInput = document.createElement('input');
+            nameInput.type = 'hidden';
+            nameInput.name = ENTRY_NAME;
+            nameInput.value = name;
+            form.appendChild(nameInput);
+            
+            const attendanceInput = document.createElement('input');
+            attendanceInput.type = 'hidden';
+            attendanceInput.name = ENTRY_ATTENDANCE;
+            attendanceInput.value = attendance;
+            form.appendChild(attendanceInput);
+            
+            const messageInput = document.createElement('input');
+            messageInput.type = 'hidden';
+            messageInput.name = ENTRY_MESSAGE;
+            messageInput.value = message || '';
+            form.appendChild(messageInput);
+            
+            // form을 body에 추가하고 제출
+            document.body.appendChild(form);
+            form.submit();
+            
+            // 성공 메시지 표시
+            hideModal();
+            document.getElementById('successMessage').style.display = 'block';
+            
+            // 3초 후 성공 메시지 숨기기 및 정리
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'none';
+                document.body.removeChild(form);
+                document.body.removeChild(iframe);
+            }, 3000);
         });
         
         // 모달 외부 클릭시 닫기
