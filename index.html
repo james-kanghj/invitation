@@ -582,15 +582,14 @@
             const message = formData.get('message');
             const attendance = formData.get('attendance');
             
-            // ⚠️ 여기에 Google Forms 정보를 입력하세요!
-            // 1. Google Forms URL (양식 ID)
-            const GOOGLE_FORM_ID = 'YOUR_FORM_ID_HERE'; // 예: 1FAIpQLSd...
+            // Google Forms 정보
+            const GOOGLE_FORM_ID = '1FAIpQLSd3kG14uf4XA88Zl7FdWnzuVVIn27ZzRaqcSfygbrtHr_Y7zg';
             const GOOGLE_FORM_URL = `https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`;
             
-            // 2. 각 필드의 entry ID (미리 채워진 링크에서 확인)
-            const ENTRY_NAME = 'entry.XXXXXXXXX';      // 이름 필드 ID
-            const ENTRY_ATTENDANCE = 'entry.YYYYYYYYY'; // 참석 여부 필드 ID
-            const ENTRY_MESSAGE = 'entry.ZZZZZZZZZ';   // 메시지 필드 ID
+            // 각 필드의 entry ID
+            const ENTRY_NAME = 'entry.2018460567';      // 이름 필드
+            const ENTRY_ATTENDANCE = 'entry.312957960'; // 참석 여부 필드
+            const ENTRY_MESSAGE = 'entry.918453478';    // 메시지 필드
             
             try {
                 // FormData 생성
