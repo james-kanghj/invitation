@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제임스의 생일 초대장</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(to bottom, #87CEEB 0%, #98D8E8 50%, #B0E0E6 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+        
+        /* 구름 애니메이션 */
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 100px;
+            opacity: 0.7;
+        }
+        
+        .cloud::before {
+            content: '';
+            position: absolute;
+            background: white;
+            border-radius: 100px;
+        }
+        
+        .cloud1 {
+            width: 100px;
+            height: 40px;
+            top: 20%;
+            left: -100px;
+            animation: drift 20s infinite;
+        }
+        
+        .cloud1::before {
+            width: 50px;
+            height: 50px;
+            top: -25px;
+            left: 10px;
+        }
+        
+        .cloud2 {
+            width: 80px;
+            height: 35px;
+            top: 40%;
+            left: -80px;
+            animation: drift 25s infinite;
+        }
+        
+        .cloud2::before {
+            width: 60px;
+            height: 40px;
+            top: -20px;
+            right: 15px;
+        }
+        
+        @keyframes drift {
+            from { transform: translateX(0); }
+            to { transform: translateX(calc(100vw + 100px)); }
+        }
+        
+        .invitation-card {
+            background: linear-gradient(135deg, #FFF8DC 0%, #FAEBD7 50%, #FFE4B5 100%);
+            width: 100%;
+            max-width: 500px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+            border: 3px solid #F4A460;
+        }
+        
+        /* 토토로 스타일 캐릭터 */
+        .totoro-character {
+            position: absolute;
+            top: -40px;
+            right: 30px;
+            width: 80px;
+            height: 80px;
+            background: #8B7355;
+            border-radius: 50% 50% 45% 45%;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        
+        .totoro-character::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 25px;
+            background: #8B7355;
+            border-radius: 50%;
+            top: -10px;
+            left: 15px;
+            transform: rotate(-20deg);
+        }
+        
+        .totoro-character::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 25px;
+            background: #8B7355;
+            border-radius: 50%;
+            top: -10px;
+            right: 15px;
+            transform: rotate(20deg);
+        }
+        
+        .totoro-belly {
+            position: absolute;
+            width: 50px;
+            height: 40px;
+            background: #F5DEB3;
+            border-radius: 50%;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .totoro-eyes {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .eye {
+            width: 8px;
+            height: 8px;
+            background: #333;
+            border-radius: 50%;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .content {
+            padding: 100px 40px 40px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #5D4037;
+            margin-bottom: 30px;
+            line-height: 1.5;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .cake-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            animation: sway 3s ease-in-out infinite;
+        }
+        
+        @keyframes sway {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+        
+        .message {
+            color: #5D4037;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+        
+        .message p {
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+        
+        .highlight {
+            background: rgba(255, 182, 193, 0.4);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 500;
+            display: inline-block;
+        }
+        
+        .details-box {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 2px solid #DEB887;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .detail-item {
+            margin: 10px 0;
+            font-size: 16px;
+            color: #5D4037;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .detail-item .emoji {
+            font-size: 20px;
+        }
+        
+        .footer-message {
+            font-size: 17px;
+            color: #5D4037;
+            font-weight: 500;
+            margin-top: 25px;
+            padding: 12px;
+            background: rgba(255, 228, 181, 0.5);
+            border-radius: 15px;
+            border: 1px solid #DEB887;
+        }
+        
+        .small-note {
+            margin-top: 15px;
+            font-size: 11px;
+            color: #8B7355;
+            opacity: 0.7;
+            font-style: italic;
+        }
+        
+        /* 참석 버튼 스타일 */
+        .attendance-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed #DEB887;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .attend-button {
+            flex: 1;
+            background: linear-gradient(135deg, #4CAF50 0%, #45A049 100%);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+        
+        .decline-button {
+            flex: 1;
+            background: linear-gradient(135deg, #FF7043 0%, #FF5722 100%);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 87, 34, 0.3);
+        }
+        
+        .attend-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+        }
+        
+        .decline-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 87, 34, 0.4);
+        }
+        
+        /* 모달 스타일 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .form-group {
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #5D4037;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #DEB887;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: inherit;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .form-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .submit-btn,
+        .cancel-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .submit-btn:hover {
+            background: #45a049;
+        }
+        
+        .cancel-btn {
+            background: #f0f0f0;
+            color: #5D4037;
+        }
+        
+        .cancel-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        /* 성공 메시지 */
+        .success-message {
+            display: none;
+            background: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* 작은 꽃 장식 */
+        .flower {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            opacity: 0.6;
+        }
+        
+        .flower::before {
+            content: '🌸';
+            font-size: 20px;
+            position: absolute;
+            animation: float-flower 4s ease-in-out infinite;
+        }
+        
+        .flower1 { bottom: 20px; left: 20px; }
+        .flower2 { bottom: 50px; right: 30px; animation-delay: 1s; }
+        .flower3 { bottom: 30px; left: 50%; animation-delay: 2s; }
+        
+        @keyframes float-flower {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(180deg); }
+        }
+        
+        /* 부드러운 그림자 효과 */
+        .soft-shadow {
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            filter: blur(10px);
+        }
+    </style>
+</head>
+<body>
+    <!-- 구름들 -->
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    
+    <div class="invitation-card">
+        <!-- 토토로 스타일 캐릭터 -->
+        <div class="totoro-character">
+            <div class="totoro-belly"></div>
+            <div class="totoro-eyes">
+                <div class="eye"></div>
+                <div class="eye"></div>
+            </div>
+        </div>
+        
+        <!-- 꽃 장식 -->
+        <div class="flower flower1"></div>
+        <div class="flower flower2"></div>
+        <div class="flower flower3"></div>
+        
+        <div class="content">
+            <div class="cake-icon">🎂</div>
+            <h1 class="title">제임스의 생일 저녁 초대장</h1>
+            
+            <div class="message">
+                <p>조용히 지나가려 했지만…</p>
+                <p><span class="highlight">함께 웃고 떠들 사람들과 보내고 싶은 오늘!</span></p>
+                <br>
+                <p>생일이라고는 했지만,</p>
+                <p>준비물은 없어요.</p>
+                <p>👉 재밌게 놀 수 있는 정신만 무장해서 와주세요 :)</p>
+            </div>
+            
+            <div class="details-box">
+                <div class="detail-item">
+                    <span class="emoji">🗓️</span>
+                    <span>2025년 6월 18일 (수요일)</span>
+                </div>
+                <div class="detail-item">
+                    <span class="emoji">🕡</span>
+                    <span>오후 6시 30분</span>
+                </div>
+                <div class="detail-item">
+                    <span class="emoji">📍</span>
+                    <span>장소: 곧 정해질 예정!</span>
+                </div>
+                <div class="detail-item">
+                    <span class="emoji">🎁</span>
+                    <span>준비물: 없음</span>
+                </div>
+            </div>
+            
+            <div class="footer-message">
+                편하게 들러줘요 ✨
+            </div>
+            
+            <p class="small-note">
+                참고로, 제임스는 술마시면 뭘 잃어버려요. 잘 챙겨줘요. :)
+            </p>
+            
+            <!-- 참석 확인 섹션 -->
+            <div class="attendance-section">
+                <div class="button-group">
+                    <button class="attend-button" onclick="showModal('yes')">
+                        🎉 참석할 수 있어요
+                    </button>
+                    <button class="decline-button" onclick="showModal('no')">
+                        😢 참석 못 해요
+                    </button>
+                </div>
+                <div class="success-message" id="successMessage">
+                    응답이 전송되었습니다! 감사합니다 💝
+                </div>
+            </div>
+        </div>
+        
+        <div class="soft-shadow"></div>
+    </div>
+    
+    <!-- 참석 폼 모달 -->
+    <div class="modal" id="attendModal">
+        <div class="modal-content">
+            <h2 id="modalTitle" style="color: #5D4037; margin-bottom: 20px;">참석 신청</h2>
+            <form id="attendForm">
+                <input type="hidden" id="attendance" name="attendance">
+                <div class="form-group">
+                    <label for="name">이름 *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">제임스에게 한마디 💌</label>
+                    <textarea id="message" name="message" placeholder="생일 축하 메시지를 남겨주세요!"></textarea>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="submit-btn">전송하기</button>
+                    <button type="button" class="cancel-btn" onclick="hideModal()">취소</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // 현재 참석 여부 상태
+        let currentAttendance = '';
+        
+        // 모달 표시
+        function showModal(attendance) {
+            currentAttendance = attendance;
+            const modal = document.getElementById('attendModal');
+            const modalTitle = document.getElementById('modalTitle');
+            
+            if (attendance === 'yes') {
+                modalTitle.textContent = '참석 신청 🎉';
+            } else {
+                modalTitle.textContent = '불참 신청 😢';
+            }
+            
+            document.getElementById('attendance').value = attendance === 'yes' ? '참석할 수 있어요' : '참석 못 해요';
+            modal.style.display = 'flex';
+        }
+        
+        // 모달 숨기기
+        function hideModal() {
+            document.getElementById('attendModal').style.display = 'none';
+            document.getElementById('attendForm').reset();
+        }
+        
+        // 폼 제출 처리
+        document.getElementById('attendForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const name = formData.get('name');
+            const message = formData.get('message');
+            const attendance = formData.get('attendance');
+            
+            // ⚠️ 여기에 Google Forms 정보를 입력하세요!
+            // 1. Google Forms URL (양식 ID)
+            const GOOGLE_FORM_ID = 'YOUR_FORM_ID_HERE'; // 예: 1FAIpQLSd...
+            const GOOGLE_FORM_URL = `https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`;
+            
+            // 2. 각 필드의 entry ID (미리 채워진 링크에서 확인)
+            const ENTRY_NAME = 'entry.XXXXXXXXX';      // 이름 필드 ID
+            const ENTRY_ATTENDANCE = 'entry.YYYYYYYYY'; // 참석 여부 필드 ID
+            const ENTRY_MESSAGE = 'entry.ZZZZZZZZZ';   // 메시지 필드 ID
+            
+            try {
+                // FormData 생성
+                const googleFormData = new FormData();
+                googleFormData.append(ENTRY_NAME, name);
+                googleFormData.append(ENTRY_ATTENDANCE, attendance);
+                googleFormData.append(ENTRY_MESSAGE, message || '');
+                
+                // Google Forms로 전송 (CORS 우회를 위해 no-cors 모드 사용)
+                await fetch(GOOGLE_FORM_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: googleFormData
+                });
+                
+                // 성공 메시지 표시
+                hideModal();
+                document.getElementById('successMessage').style.display = 'block';
+                
+                // 3초 후 성공 메시지 숨기기
+                setTimeout(() => {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 3000);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert('전송 중 오류가 발생했습니다. 다시 시도해주세요.');
+            }
+        });
+        
+        // 모달 외부 클릭시 닫기
+        document.getElementById('attendModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideModal();
+            }
+        });
+    </script>
+</body>
+</html>
